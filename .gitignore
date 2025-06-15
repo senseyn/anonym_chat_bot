@@ -25,7 +25,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-TESTSDIR/
+tests/
+db/users_data.csv
 
 
 *.manifest
@@ -53,12 +54,6 @@ cover/
 # Translations
 *.mo
 *.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
 
 # Flask stuff:
 instance/
@@ -105,7 +100,6 @@ venv.bak/
 .idea
 
 #БАЗА ПОЛЬЗОВАТЕЛЕЙ
-users_data.csv
 .csv
 
 #ЛОГИРОВАНИЕ
