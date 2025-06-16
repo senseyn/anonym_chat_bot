@@ -5,11 +5,11 @@ import logging
 from aiogram.exceptions import TelegramNetworkError
 from aiohttp import ClientConnectorError
 #=========БИБЛИОТЕКИ СТАНДАРТ========
-from create_bot import bot, dp
+from src.create_bot import bot, dp
 #==========ИМПОРТ МОИХ ФАЙЛОВ=========
-from handlers.start import start_router, set_commands
-from handlers.welcome import print_start_banner
-from handlers.style_text import start_text_bot, stop_text_bot
+from src.bot.handlers.user.start import start_router, set_commands
+from src.bot.handlers.welcome import print_start_banner
+from src.bot.handlers.user.style_text_user import start_text_bot, stop_text_bot
 
 
 #=====================================

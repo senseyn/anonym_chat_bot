@@ -10,8 +10,8 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import BotCommand, BotCommandScopeDefault
 from aiohttp import ClientConnectorError
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
-from handlers.style_text import start_text_bot, stop_text_bot, bot_text_baner
-from handlers.welcome import print_start_banner
+from src.bot.handlers.user.style_text_user import start_text_bot, stop_text_bot, bot_text_baner
+from src.bot.handlers.welcome import print_start_banner
 #=====================================
 
 logging.basicConfig(level=logging.INFO,
@@ -42,7 +42,7 @@ async def animate_text(message: types.Message):
     )
     await asyncio.sleep(0.5)
     name = message.from_user.first_name
-    text = bot_text_baner(name)  #ОТПРАВЛЯЕМ И ПРИНИМАЕМ ТЕКСТ С ПАРАМЕТРОМ NAME
+    text = bot_text_baner(name, 1)  #ОТПРАВЛЯЕМ И ПРИНИМАЕМ ТЕКСТ С ПАРАМЕТРОМ NAME
     await message.answer(text, parse_mode="HTML")
 
 
