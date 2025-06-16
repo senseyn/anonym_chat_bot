@@ -7,7 +7,7 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message, BotCommand, BotCommandScopeDefault
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
-from src.create_bot import bot
+from create_bot import bot
 from src.bot.handlers.user.style_text_user import bot_text_baner
 from src.bot.db.users_csv import add_user_check, user_registration_date
 

@@ -7,7 +7,7 @@ from aiogram.fsm.storage.memory import MemoryStorage  # БИБЛИОТЕКА Д�
 # from aiogram.fsm.storage.redis import RedisStorage #ЛУЧШИЙ ВАРИАНТ ДЛЯ ПРОДАКШЕНА
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
-from src.config import load_config
+from config import load_config
 
 # # # from db.db import PostgresHandler
 #=====================================
