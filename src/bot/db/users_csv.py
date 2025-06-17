@@ -56,7 +56,7 @@ def add_user_check(user: User) -> None:
             "USER_ID": user_id,
             "FIRST_NAME": user.first_name or "",
             "LAST_NAME": user.last_name or "",
-            "USERNAME": "@" + user.username if user.username != "" else "",
+            "USERNAME": "@" + str(user.username) if str(user.username) != "" else "",
             "PREMIUM": user.is_premium or "",
             "LANGUAGE": user.language_code,
             "IS_BOT": user.is_bot,
