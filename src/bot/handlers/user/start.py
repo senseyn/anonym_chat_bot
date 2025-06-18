@@ -3,8 +3,10 @@ import asyncio
 
 from aiogram import Router, F  # - магический фильтр
 from aiogram.enums import ChatAction
-from aiogram.filters import CommandStart, Command
+from aiogram.filters import CommandStart
 from aiogram.types import Message, BotCommand, BotCommandScopeDefault
+from aiogram.fsm.context import FSMContext
+from src.bot.states.menu_states import MenuStates
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
 from create_bot import bot
@@ -38,8 +40,10 @@ async def set_commands():
 
 #======================КОМАНДЫ БОТА==============================
 @start_router.message(CommandStart())
-async def cmd_start(message: Message):
-    add_user_check(message.from_user)  # заносим в базу CSV
+async def cmd_start(message: Message, state: FSMContext):
+    await state.clear() # очистка всех состояний
+    await state.set_state(MenuStates.Main) # переход в состояние маин
+    add_user_check(message.from_user)  # проверяем или заносим в базу CSV
     date_reg = user_registration_date(str(message.from_user.id))  # получаем дату регистрации
     #========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
@@ -54,29 +58,14 @@ async def cmd_start(message: Message):
         delete_mess_commands(e)
     # ================================
     name = message.from_user.first_name  # Достаем имя пользователя
-    text = bot_text_baner(name, date_reg)  # ОТПРАВЛЯЕМ И ПРИНИМАЕМ ТЕКСТ С ПАРАМЕТРОМ NAME
+    text = bot_text_baner(name, date_reg)  # ОТПРАВЛЯЕМ И ПРИНИМАЕМ ТЕКСТ С ПАРАМЕТРОМ NAME И ДАТОЙ РЕГ
     await message.answer(text, parse_mode="HTML")
 
 
-@start_router.message(F.text.lower() == "привет")
-async def tests(message: Message):
-    await message.answer("ДА ДА ДА")
-
-
-#==============СКРЫТАЯ КОМАНДА ДЛЯ ЮЗЕРОВ================
-@start_router.message(Command('hidden'))
-async def tests(message: Message):
-    # ========ПЕЧАТАЕТ СТАТУС=========
-    await message.bot.send_chat_action(
-        chat_id=message.chat.id,
-        action=ChatAction.TYPING
-    )
-    await asyncio.sleep(0.5)
-    # ========УДАЛЕНИЕ И ПРОВЕРКА======
-    try:
-        await message.delete()
-    except Exception as e:
-        delete_mess_commands(e)
-    # ================================
-    text = "команды:"  # ПРИНИМАЕМ ТЕКСТ
-    await message.answer(text, parse_mode="HTML")
+#==============ОТВЕТ НА ОБЫЧНЫЙ ТЕКСТ====================
+@start_router.message(F.text.lower() == "привет", MenuStates.Main)
+async def tests(message: Message, state: FSMContext):
+    await state.set_state(MenuStates.Main)
+    # curr_state = await state.get_state()
+    # await message.answer(f"Вы в состоянии: {curr_state}")
+    await message.answer("пп а")
