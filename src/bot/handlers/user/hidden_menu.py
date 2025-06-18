@@ -42,6 +42,16 @@ async def hidde_command(message: Message, state: FSMContext):
 
 @hidden_router.message(Command('cube'), MenuStates.Hidde)
 async def hidde_command(message: Message, state: FSMContext):
-    await state.set_state(MenuStates.Hidde)
+    # ========ПЕЧАТАЕТ СТАТУС=========
+    await message.bot.send_chat_action(
+        chat_id=message.chat.id,
+        action=ChatAction.TYPING
+    )
+    await asyncio.sleep(0.5)
+    # ========УДАЛЕНИЕ И ПРОВЕРКА======
+    try:
+        await message.delete()
+    except Exception as e:
+        delete_mess_commands(e)
     await message.answer('🎲')
 
