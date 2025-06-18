@@ -65,7 +65,6 @@ async def cmd_start(message: Message, state: FSMContext):
 #==============ОТВЕТ НА ОБЫЧНЫЙ ТЕКСТ====================
 @start_router.message(F.text.lower() == "привет", MenuStates.Main)
 async def tests(message: Message, state: FSMContext):
-    await state.set_state(MenuStates.Main)
     # curr_state = await state.get_state()
     # await message.answer(f"Вы в состоянии: {curr_state}")
-    await message.answer("пп а")
+    await message.answer("Здарова")
