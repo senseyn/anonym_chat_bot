@@ -40,6 +40,54 @@ async def hidde_command(message: Message, state: FSMContext):
     await message.answer(text, parse_mode="HTML")
 
 
+@hidden_router.message(Command('about'), MenuStates.Hidde)
+async def hidde_command(message: Message, state: FSMContext):
+    # ========ПЕЧАТАЕТ СТАТУС=========
+    await message.bot.send_chat_action(
+        chat_id=message.chat.id,
+        action=ChatAction.TYPING
+    )
+    await asyncio.sleep(0.5)
+    # ========УДАЛЕНИЕ И ПРОВЕРКА======
+    try:
+        await message.delete()
+    except Exception as e:
+        delete_mess_commands(e)
+    await message.answer('описание бота')
+    
+    
+@hidden_router.message(Command('roll'), MenuStates.Hidde)
+async def hidde_command(message: Message, state: FSMContext):
+    # ========ПЕЧАТАЕТ СТАТУС=========
+    await message.bot.send_chat_action(
+        chat_id=message.chat.id,
+        action=ChatAction.TYPING
+    )
+    await asyncio.sleep(0.5)
+    # ========УДАЛЕНИЕ И ПРОВЕРКА======
+    try:
+        await message.delete()
+    except Exception as e:
+        delete_mess_commands(e)
+    await message.answer('случайное число')
+    
+    
+@hidden_router.message(Command('cat'), MenuStates.Hidde)
+async def hidde_command(message: Message, state: FSMContext):
+    # ========ПЕЧАТАЕТ СТАТУС=========
+    await message.bot.send_chat_action(
+        chat_id=message.chat.id,
+        action=ChatAction.TYPING
+    )
+    await asyncio.sleep(0.5)
+    # ========УДАЛЕНИЕ И ПРОВЕРКА======
+    try:
+        await message.delete()
+    except Exception as e:
+        delete_mess_commands(e)
+    await message.answer('случайный кот')
+    
+    
 @hidden_router.message(Command('cube'), MenuStates.Hidde)
 async def hidde_command(message: Message, state: FSMContext):
     # ========ПЕЧАТАЕТ СТАТУС=========
@@ -54,4 +102,20 @@ async def hidde_command(message: Message, state: FSMContext):
     except Exception as e:
         delete_mess_commands(e)
     await message.answer_dice(emoji='🎲')
+    
 
+@hidden_router.message(Command('weather'), MenuStates.Hidde)
+async def hidde_command(message: Message, state: FSMContext):
+    # ========ПЕЧАТАЕТ СТАТУС=========
+    await message.bot.send_chat_action(
+        chat_id=message.chat.id,
+        action=ChatAction.TYPING
+    )
+    await asyncio.sleep(0.5)
+    # ========УДАЛЕНИЕ И ПРОВЕРКА======
+    try:
+        await message.delete()
+    except Exception as e:
+        delete_mess_commands(e)
+    await message.answer('погода')
+    
