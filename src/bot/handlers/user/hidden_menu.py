@@ -85,7 +85,7 @@ async def hidde_command(message: Message, state: FSMContext):
         await message.delete()
     except Exception as e:
         delete_mess_commands(e)
-    await message.answer('случайный кот')
+    await message.answer_photo("https://cataas.com/cat", caption="Котик (˶‾᷄ ⁻̫ ‾᷅˵)")
     
     
 @hidden_router.message(Command('cube'), MenuStates.Hidde)
