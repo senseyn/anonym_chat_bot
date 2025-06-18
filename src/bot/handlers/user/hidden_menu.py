@@ -53,5 +53,5 @@ async def hidde_command(message: Message, state: FSMContext):
         await message.delete()
     except Exception as e:
         delete_mess_commands(e)
-    await message.send_dice('🎲')
+    await message.answer_dice(emoji='🎲')
 
