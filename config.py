@@ -9,6 +9,7 @@ load_dotenv()
 class BotConfig:
     token: str
     admins: list[int]
+    channel_link: str
 
 
 @dataclass
@@ -38,7 +39,8 @@ def load_config() -> Config:
     return Config(
         bot=BotConfig(
             token=os.getenv("TOKEN", ""),
-            admins=[int(admin_id) for admin_id in os.getenv("ADMINS", "").split(",") if admin_id]
+            admins=[int(admin_id) for admin_id in os.getenv("ADMINS", "").split(",") if admin_id],
+            channel_link=os.getenv("CHANNEL_LINK", "")
         ),
         scheduler=SchedulerConfig(
             timezone=os.getenv("TIMEZONE", "Europe/Moscow")

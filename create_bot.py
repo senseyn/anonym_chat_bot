@@ -21,7 +21,8 @@ logging.basicConfig(level=logging.INFO, format="\033[1;30;47m%(asctime)s - %(nam
 logger = logging.getLogger(__name__)
 
 scheduler = AsyncIOScheduler(timezone=cfg.scheduler.timezone)
-admins = cfg.bot.admins
+admins = cfg.bot.admins # id админов
+channel_link = cfg.bot.channel_link # ссылка на канал
 bot = Bot(token=cfg.bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 dp = Dispatcher(storage=MemoryStorage())  #ОБРАБОТЧИК СООБЩЕНИЙ СОХРАНЯЕТ ДАННЫЕ В ОПЕРАТИВНОЙ ПАМЯТИ
 #dp = Dispatcher(storage=storage_redis)  #ОБРАБОТЧИК СООБЩЕНИЙ СОХРАНЯЕТ ДАННЫЕ В REDIS

@@ -6,8 +6,8 @@ def admins_menu_text():
 ░▀░▀░▀▀░░▀░▀░▀▀▀░▀░▀░▀▀▀</pre>
 <b>СПИСОК КОМАНД АДМИНА:</b>
 /dashboard - Меню админа
-/user_data_id - Поиск пользователя по ID
-/mailing - Рассылка всем user
-/stats_view - Статистика бота         - 
-=========================='''
+/user_data_id - Поиск по ID
+/mailing - Рассылка
+/stats_view - Статистика
+========================'''
     return text_admin

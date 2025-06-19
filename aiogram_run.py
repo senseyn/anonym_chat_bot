@@ -7,6 +7,7 @@ from aiohttp import ClientConnectorError
 #=========БИБЛИОТЕКИ СТАНДАРТ========
 from create_bot import bot, dp
 #==========ИМПОРТ МОИХ ФАЙЛОВ=========
+from src.bot.handlers.admin.admins_menu import admins_router
 from src.bot.handlers.user.hidden_menu import hidden_router
 from src.bot.handlers.user.start import start_router, set_commands
 from src.bot.handlers.welcome import print_start_banner

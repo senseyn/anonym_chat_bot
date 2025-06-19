@@ -1,0 +1,2 @@
+# /paysupport
+# /admin_support

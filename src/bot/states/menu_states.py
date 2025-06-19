@@ -6,5 +6,6 @@ class MenuStates(StatesGroup):
     Main = State()
     Hidde = State()
 
+
 class AdminStates(StatesGroup):
     Dashboard = State()  # меню админа

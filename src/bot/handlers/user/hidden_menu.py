@@ -6,6 +6,7 @@ from aiogram.enums import ChatAction
 from aiogram.filters import Command
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
+
 from src.bot.states.menu_states import MenuStates
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
@@ -23,6 +24,7 @@ def delete_mess_commands(error):
 #======================КОМАНДЫ БОТА==============================
 @hidden_router.message(Command('hidden'))
 async def hidde_command(message: Message, state: FSMContext):
+    await state.clear()
     await state.set_state(MenuStates.Hidde)
     # ========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
@@ -41,7 +43,7 @@ async def hidde_command(message: Message, state: FSMContext):
 
 
 @hidden_router.message(Command('about'), MenuStates.Hidde)
-async def hidde_command(message: Message, state: FSMContext):
+async def hidde_command_about(message: Message):
     # ========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
@@ -53,11 +55,12 @@ async def hidde_command(message: Message, state: FSMContext):
         await message.delete()
     except Exception as e:
         delete_mess_commands(e)
+
     await message.answer('описание бота')
     
     
 @hidden_router.message(Command('roll'), MenuStates.Hidde)
-async def hidde_command(message: Message, state: FSMContext):
+async def hidde_command_roll(message: Message):
     # ========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
@@ -73,11 +76,11 @@ async def hidde_command(message: Message, state: FSMContext):
     
     
 @hidden_router.message(Command('cat'), MenuStates.Hidde)
-async def hidde_command(message: Message, state: FSMContext):
+async def hidde_command_cat(message: Message):
     # ========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
-        action=ChatAction.TYPING
+        action=ChatAction.UPLOAD_PHOTO
     )
     await asyncio.sleep(0.5)
     # ========УДАЛЕНИЕ И ПРОВЕРКА======
@@ -89,7 +92,7 @@ async def hidde_command(message: Message, state: FSMContext):
     
     
 @hidden_router.message(Command('cube'), MenuStates.Hidde)
-async def hidde_command(message: Message, state: FSMContext):
+async def hidde_command_cube(message: Message):
     # ========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
@@ -105,7 +108,7 @@ async def hidde_command(message: Message, state: FSMContext):
     
 
 @hidden_router.message(Command('weather'), MenuStates.Hidde)
-async def hidde_command(message: Message, state: FSMContext):
+async def hidde_command_weather(message: Message):
     # ========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
