@@ -29,6 +29,14 @@ def hidden_commands_block():
 ========================
 /weather - погода по геолокации'''
     return text_hidden_block
+    
+  
+def help_text_user(name):
+    text_help = f'''
+Привет, {name}.
+Вижу тебе понадобилась помощь!
+'''
+    return text_help
 
 
 #================ВЫВОД В КОНСОЛЬ=============================
