@@ -10,7 +10,7 @@ from aiogram.fsm.context import FSMContext
 from src.bot.states.menu_states import MenuStates
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
-from src.bot.handlers.user.style_text_user import 
+from src.bot.handlers.user.style_text_user import help_text_user
 #======================================
 start_router = Router()
 
