@@ -41,8 +41,8 @@ async def set_commands():
 #======================КОМАНДЫ БОТА==============================
 @start_router.message(CommandStart())
 async def cmd_start(message: Message, state: FSMContext):
-    await state.clear() # очистка всех состояний
-    await state.set_state(MenuStates.Main) # переход в состояние маин
+    await state.clear()  # очистка всех состояний
+    await state.set_state(MenuStates.Main)  # переход в состояние маин
     add_user_check(message.from_user)  # проверяем или заносим в базу CSV
     date_reg = user_registration_date(str(message.from_user.id))  # получаем дату регистрации
     #========ПЕЧАТАЕТ СТАТУС=========
@@ -64,7 +64,7 @@ async def cmd_start(message: Message, state: FSMContext):
 
 #==============ОТВЕТ НА ОБЫЧНЫЙ ТЕКСТ====================
 @start_router.message(F.text.lower() == "привет", MenuStates.Main)
-async def tests(message: Message, state: FSMContext):
+async def tests(message: Message):
     # curr_state = await state.get_state()
     # await message.answer(f"Вы в состоянии: {curr_state}")
     await message.answer("Здарова")
