@@ -20,7 +20,7 @@ def delete_mess_commands(error):
 
 #======================КОМАНДЫ БОТА==============================
 @start_router.message(Command('help'), MenuStates.Main)
-async def cmd_start(message: Message, state: FSMContext):
+async def help_user(message: Message, state: FSMContext):
     #========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
