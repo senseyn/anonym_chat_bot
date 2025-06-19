@@ -4,14 +4,14 @@ import asyncio
 from aiogram import Router, F  # - магический фильтр
 from aiogram.enums import ChatAction
 from aiogram.filters import CommandStart
-from aiogram.types import Message, BotCommand, BotCommandScopeDefault
 from aiogram.fsm.context import FSMContext
-from src.bot.states.menu_states import MenuStates
+from aiogram.types import Message
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
-from create_bot import bot
-from src.bot.handlers.user.style_text_user import bot_text_baner
 from src.bot.db.users_csv import add_user_check, user_registration_date
+from src.bot.handlers.user.style_text_user import bot_text_baner
+from src.bot.servises.command import set_commands
+from src.bot.states.menu_states import MenuStates
 
 #======================================
 start_router = Router()
@@ -22,26 +22,11 @@ def delete_mess_commands(error):
     print(f"\033[1;41mОшибка удаления\033[0m: {error}")
 
 
-#======================СОЗДАНИЕ СПИСКА КОМАНД====================
-async def set_commands():
-    commands = [BotCommand(command='search', description='🔍 Поиск собеседника'),
-                BotCommand(command='stop', description='❌ Закончить диалог с собеседником'),
-                BotCommand(command='start', description='🔄 Перезапуск бота'),
-                BotCommand(command='interests', description='📝 Выбрать интересы'),
-                BotCommand(command='help', description='❔Помощь по боту'),
-                BotCommand(command='vip', description='💎 VIP-статус'),
-                BotCommand(command='paysupport', description='💰 Помощь по оплате'),
-                BotCommand(command='settings', description='⚙️ Настройки профиля'),
-                BotCommand(command='rules', description='📙 Правила общения в чате'),
-                BotCommand(command='myid', description='🆔 Отобразить ID аккаунта'),
-                BotCommand(command='hidden', description='🔓 скрытые команды')]
-    await bot.set_my_commands(commands, BotCommandScopeDefault())
-
-
 #======================КОМАНДЫ БОТА==============================
 @start_router.message(CommandStart())
 async def cmd_start(message: Message, state: FSMContext):
     await state.clear()  # очистка всех состояний
+    await set_commands(message.chat.id)
     await state.set_state(MenuStates.Main)  # переход в состояние маин
     add_user_check(message.from_user)  # проверяем или заносим в базу CSV
     date_reg = user_registration_date(str(message.from_user.id))  # получаем дату регистрации

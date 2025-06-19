@@ -7,11 +7,15 @@ from aiohttp import ClientConnectorError
 #=========БИБЛИОТЕКИ СТАНДАРТ========
 from create_bot import bot, dp
 #==========ИМПОРТ МОИХ ФАЙЛОВ=========
+# роутеры:
 from src.bot.handlers.admin.admins_menu import admins_router
 from src.bot.handlers.user.hidden_menu import hidden_router
-from src.bot.handlers.user.start import start_router, set_commands
+from src.bot.handlers.user.main_menu import main_router
+from src.bot.handlers.user.start import start_router
+
 from src.bot.handlers.welcome import print_start_banner
 from src.bot.handlers.user.style_text_user import start_text_bot, stop_text_bot
+from src.bot.servises.command import set_commands
 
 
 #=====================================
@@ -26,6 +30,7 @@ async def main():
         dp.include_router(start_router)
         dp.include_router(hidden_router)
         dp.include_router(admins_router)
+        dp.include_router(main_router)
         #УДАЛЯЕМ ВЕБХУКИ
         await bot.delete_webhook(drop_pending_updates=True)
         await set_commands()  # УСТАНОВКА МЕНЮ КОМАНД

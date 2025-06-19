@@ -8,10 +8,10 @@ from aiogram.types import Message
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
 from src.bot.handlers.user.style_text_user import help_text_user
-from src.bot.states.menu_states import MenuStates
 
+from src.bot.states.menu_states import MenuStates
 #======================================
-start_router = Router()
+main_router = Router()
 
 
 #==========ФУНКЦИИ=====================
@@ -20,7 +20,7 @@ def delete_mess_commands(error):
 
 
 #======================КОМАНДЫ БОТА==============================
-@start_router.message(Command('help'), MenuStates.Main)
+@main_router.message(Command('help'), MenuStates.Main)
 async def help_user(message: Message):
     #========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
