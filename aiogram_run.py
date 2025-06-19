@@ -24,6 +24,7 @@ async def main():
         #РЕГИСТРИРУЕМ РОУТЕРЫ
         dp.include_router(start_router)
         dp.include_router(hidden_router)
+        dp.include_router(admins_router)
         #УДАЛЯЕМ ВЕБХУКИ
         await bot.delete_webhook(drop_pending_updates=True)
         await set_commands()  # УСТАНОВКА МЕНЮ КОМАНД

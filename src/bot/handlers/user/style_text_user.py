@@ -18,6 +18,9 @@ def bot_text_baner(FIRST_NAME, DATE_REG):  #ТЕКСТ ПРИЕТСТВИЯ В �
 
 def hidden_commands_block():
     text_hidden_block = '''
+<pre>░█░█░▀█▀░█▀▄░█▀▄░█▀▀░█▀█
+░█▀█░░█░░█░█░█░█░█▀▀░█░█
+░▀░▀░▀▀▀░▀▀░░▀▀░░▀▀▀░▀░▀</pre>
 <b>СПИСОК СКРЫТЫХ КОМАНД:</b>
 /about - информация о боте и авторе
 /roll      - случайное число

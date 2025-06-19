@@ -52,7 +52,7 @@ def print_start_banner():
       Версия:    Python {python_ver}
       Программа: anonym_chat_bot
       CPU:       {cpu}
-      RAM:       {mem_used} MiB / {mem_total} MiB
+      RAM:       {mem_used} GB / {mem_total} GB
       ПАМЯТЬ НА ДИСКЕ:
       -- Всего:        {disk_info.total / 1_000_000:.2f} MB
       -- Использовано: {disk_info.used / 1_000_000:.2f} MB
