@@ -1,26 +1,8 @@
 from aiogram.types import BotCommand, BotCommandScopeDefault, BotCommandScopeChat
-
+# ==========ИМПОРТ МОИХ ФАЙЛОВ=========
 from create_bot import bot
 
 
-#======================СОЗДАНИЕ СПИСКА КОМАНД====================0.
-COMMANDS_STATE = {
-    "Main": [
-
-    ],
-    "Hidde": [
-
-    ],
-    "Admins": [
-
-    ]
-}
-
-
-async def set_commands_state():
-    commands = COMMANDS_STATE.get(state_key, COMMANDS_STATE["Main"])
-
-#################################################################################
 async def set_commands():
     commands = [BotCommand(command='search', description='🔍 Поиск собеседника'),
                 BotCommand(command='stop', description='❌ Закончить диалог с собеседником'),
