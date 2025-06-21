@@ -8,8 +8,8 @@ from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
+from src.bot.middlewares.command_setter import set_commands_state
 from src.bot.states.menu_states import MenuStates
-from src.bot.servises.command import hidden_menu_commands
 from src.bot.handlers.user.style_text_user import hidden_commands_block
 
 #======================================
@@ -25,7 +25,7 @@ def delete_mess_commands(error):
 @hidden_router.message(Command('hidden'))
 async def hidde_command(message: Message, state: FSMContext):
     await state.clear()
-    await hidden_menu_commands(message.chat.id)
+    await set_commands_state(state, message.chat.id)
     await state.set_state(MenuStates.Hidde)
     # ========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(

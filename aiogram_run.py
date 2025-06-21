@@ -15,7 +15,6 @@ from src.bot.handlers.user.start import start_router
 
 from src.bot.handlers.welcome import print_start_banner
 from src.bot.handlers.user.style_text_user import start_text_bot, stop_text_bot
-from src.bot.servises.command import set_commands
 
 
 #=====================================
@@ -33,7 +32,7 @@ async def main():
         dp.include_router(main_router)
         #УДАЛЯЕМ ВЕБХУКИ
         await bot.delete_webhook(drop_pending_updates=True)
-        await set_commands()  # УСТАНОВКА МЕНЮ КОМАНД
+        # должна быть функция # УСТАНОВКА МЕНЮ КОМАНД
         #ПРИВЕТСТВИЕ БОТА
         start_text_bot()
         print_start_banner()
