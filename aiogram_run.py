@@ -8,13 +8,13 @@ from aiohttp import ClientConnectorError
 from create_bot import bot, dp
 #==========ИМПОРТ МОИХ ФАЙЛОВ=========
 # роутеры:
-from src.bot.handlers.admin.admins_menu import admins_router
-from src.bot.handlers.user.hidden_menu import hidden_router
-from src.bot.handlers.user.main_menu import main_router
-from src.bot.handlers.user.start import start_router
+from src.handlers.admin.admins_menu import admins_router
+from src.handlers.user.hidden_menu import hidden_router
+from src.handlers.user.main_menu import main_router
+from src.handlers.user.start import start_router
 
-from src.bot.handlers.welcome import print_start_banner
-from src.bot.handlers.user.style_text_user import start_text_bot, stop_text_bot
+from src.handlers.welcome import print_start_banner
+from src.handlers.user.style_text_user import start_text_bot, stop_text_bot
 
 
 #=====================================

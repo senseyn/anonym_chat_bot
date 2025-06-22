@@ -8,12 +8,12 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
-from src.bot.filters.is_admin import IsAdmin
-from src.bot.handlers.admin.style_text_admins import admins_menu_text
-from src.bot.handlers.user.start import cmd_start
-from src.bot.keyboards.admin_inline import keyboard_admin_menu
-from src.bot.middlewares.command_setter import set_commands_state
-from src.bot.states.menu_states import AdminStates, MenuStates
+from src.filters.is_admin import IsAdmin
+from src.handlers.admin.style_text_admins import admins_menu_text
+from src.handlers.user.start import cmd_start
+from src.keyboards.admin_inline import keyboard_admin_menu
+from src.middlewares.command_setter import set_commands_state
+from src.states.menu_states import AdminStates, MenuStates
 
 #======================================
 admins_router = Router()

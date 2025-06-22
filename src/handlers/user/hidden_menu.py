@@ -8,11 +8,11 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
-from src.bot.handlers.user.start import cmd_start
-from src.bot.handlers.user.style_text_user import hidden_commands_block
-from src.bot.keyboards.user_inline import keyboard_hidden_menu
-from src.bot.middlewares.command_setter import set_commands_state
-from src.bot.states.menu_states import MenuStates
+from src.handlers.user.start import cmd_start
+from src.handlers.user.style_text_user import hidden_commands_block
+from src.keyboards.user_inline import keyboard_hidden_menu
+from src.middlewares.command_setter import set_commands_state
+from src.states.menu_states import MenuStates
 
 #======================================
 hidden_router = Router()

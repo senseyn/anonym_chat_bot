@@ -25,7 +25,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-src/bot/db/users_data.csv
+src/db/users_data.csv
 src/bot/tests/
 
 

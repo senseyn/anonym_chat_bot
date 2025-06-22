@@ -7,10 +7,8 @@ from aiogram.filters import Command
 from aiogram.types import Message
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
-from src.bot.handlers.user.style_text_user import help_text_user
-from src.bot.keyboards.user_kb import start_search_button
-
-from src.bot.states.menu_states import MenuStates
+from src.handlers.user.style_text_user import help_text_user
+from src.states.menu_states import MenuStates
 #======================================
 main_router = Router()
 

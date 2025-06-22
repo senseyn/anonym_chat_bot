@@ -13,11 +13,9 @@ aws.sh
 KP.pem
 ideas.txt
 /tmp
-DOCS/bot_overview.gif
 src/modules/
 backups/
 logs/
-DOCS/
 .github/
 .git/
 .venv/
@@ -28,3 +26,5 @@ LICENCE
 readme.md
 start.cmd
 start.sh
+log.txt
+src/db/users_data.csv
