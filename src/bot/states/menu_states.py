@@ -7,5 +7,9 @@ class MenuStates(StatesGroup):
     Hidde = State()
 
 
+class MenuSearch(StatesGroup):
+    Search = State()  # меню поиска
+
+
 class AdminStates(StatesGroup):
     Dashboard = State()  # меню админа

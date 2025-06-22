@@ -1,5 +1,5 @@
 #===========ШРИФТЫ И ТЕКСТЫ С ФОРМАТИРОВАНИЕМ================
-def admins_menu_text():
+async def admins_menu_text():
     text_admin = '''
 <pre>░█▀█░█▀▄░█▄█░▀█▀░█▀█░█▀▀
 ░█▀█░█░█░█░█░░█░░█░█░▀▀█
@@ -9,5 +9,5 @@ def admins_menu_text():
 /user_data_id - Поиск по ID
 /mailing - Рассылка
 /stats_view - Статистика
-========================'''
+/backup_db - Файл базы данных'''
     return text_admin

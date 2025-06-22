@@ -8,6 +8,7 @@ from aiogram.types import Message
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
 from src.bot.handlers.user.style_text_user import help_text_user
+from src.bot.keyboards.user_kb import start_search_button
 
 from src.bot.states.menu_states import MenuStates
 #======================================
@@ -20,6 +21,23 @@ def delete_mess_commands(error):
 
 
 #======================КОМАНДЫ БОТА==============================
+@main_router.message(Command('search'), MenuStates.Main)
+async def help_user(message: Message):
+    #========ПЕЧАТАЕТ СТАТУС=========
+    await message.bot.send_chat_action(
+        chat_id=message.chat.id,
+        action=ChatAction.TYPING
+    )
+    await asyncio.sleep(0.5)
+    #========УДАЛЕНИЕ И ПРОВЕРКА======
+    try:
+        await message.delete()
+    except Exception as e:
+        delete_mess_commands(e)
+    # ================================
+    await message.answer("Поиск", parse_mode="HTML")
+
+
 @main_router.message(Command('help'), MenuStates.Main)
 async def help_user(message: Message):
     #========ПЕЧАТАЕТ СТАТУС=========
@@ -35,5 +53,5 @@ async def help_user(message: Message):
         delete_mess_commands(e)
     # ================================
     name = message.from_user.first_name  # Достаем имя пользователя
-    text = help_text_user(name)
+    text = await help_text_user(name)
     await message.answer(text, parse_mode="HTML")

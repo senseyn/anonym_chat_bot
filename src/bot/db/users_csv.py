@@ -1,6 +1,8 @@
 import csv
 import os
 from datetime import datetime
+from typing import Tuple
+
 from aiogram.types import User
 
 # Абсолютный путь к файлу CSV

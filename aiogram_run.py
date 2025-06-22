@@ -34,7 +34,7 @@ async def main():
         await bot.delete_webhook(drop_pending_updates=True)
         # должна быть функция # УСТАНОВКА МЕНЮ КОМАНД
         #ПРИВЕТСТВИЕ БОТА
-        start_text_bot()
+        await start_text_bot()
         print_start_banner()
         await dp.start_polling(bot)  #СТАРТ БОТА
     except (TelegramNetworkError, ClientConnectorError) as e:
