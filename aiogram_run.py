@@ -12,9 +12,11 @@ from src.handlers.admin.admins_menu import admins_router
 from src.handlers.user.hidden_menu import hidden_router
 from src.handlers.user.main_menu import main_router
 from src.handlers.user.start import start_router
+from src.utils.match_engine import match_router
 
 from src.handlers.welcome import print_start_banner
 from src.handlers.user.style_text_user import start_text_bot, stop_text_bot
+
 
 
 #=====================================
@@ -30,6 +32,7 @@ async def main():
         dp.include_router(hidden_router)
         dp.include_router(admins_router)
         dp.include_router(main_router)
+        dp.include_router(match_router)
         #УДАЛЯЕМ ВЕБХУКИ
         await bot.delete_webhook(drop_pending_updates=True)
         # должна быть функция # УСТАНОВКА МЕНЮ КОМАНД

@@ -50,11 +50,20 @@ async def hidden_commands_block():
     
   
 async def help_text_user(name):
-    text_help = f'''
+    text = f'''
 Привет, {name}.
 Вижу тебе понадобилась помощь!
 '''
-    return text_help
+    return text
+
+
+async def hidden_back_text():
+    text = f'''
+<b>Скорее заходи в чат и начинай общение!</b>
+
+/search - поиск собеседника
+'''
+    return text
 
 
 #================ВЫВОД В КОНСОЛЬ=============================

@@ -17,12 +17,31 @@ async def start_search_button():
     )
     return keyboard
 
-
-button_user_stop_search = [
-    [KeyboardButton(text="❌ Остановить поиск")]
-]
+async def stop_search_button():
+    button_user_start = [
+        [KeyboardButton(text="❌ Остановить поиск")]
+    ]
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=button_user_start,
+        resize_keyboard=True,
+        one_time_keyboard=True,
+        input_field_pdlaceholder="ВЫБЕРИ КНОПКУ НИЖЕ ↓"
+    )
+    return keyboard
 
 button_user_stop = [
     [KeyboardButton(text="➡️ Следующий")],
     [KeyboardButton(text="🚫 Закончить диалог")]
 ]
+
+async def hidden_back():
+    button_user_start = [
+        [KeyboardButton(text="🔙 В главное меню")]
+    ]
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=button_user_start,
+        resize_keyboard=True,
+        one_time_keyboard=True,
+        input_field_pdlaceholder="ВЫБЕРИ КНОПКУ НИЖЕ ↓"
+    )
+    return keyboard

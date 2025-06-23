@@ -11,3 +11,13 @@ async def admins_menu_text():
 /stats_view - Статистика
 /backup_db - Файл базы данных'''
     return text_admin
+
+
+async def admin_back_text():
+    text = f'''
+<b>Приветствую админ!</b>
+Заходи в чат 
+
+/search - поиск собеседника
+'''
+    return text

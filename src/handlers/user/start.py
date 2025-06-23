@@ -1,11 +1,10 @@
 #=========БИБЛИОТЕКИ СТАНДАРТ========
 import asyncio
 
-from aiogram import Router, F  # - магический фильтр
+from aiogram import Router, types # - магический фильтр
 from aiogram.enums import ChatAction
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
 from src.db.users_csv import add_user_check, user_registration_date, user_already_exists
@@ -18,14 +17,9 @@ from src.states.menu_states import MenuStates
 start_router = Router()
 
 
-#==========ФУНКЦИИ=====================
-def delete_mess_commands(error):
-    print(f"\033[1;41mОшибка удаления\033[0m: {error}")
-
-
 #======================КОМАНДЫ БОТА==============================
 @start_router.message(CommandStart())
-async def cmd_start(message: Message, state: FSMContext):
+async def cmd_start(message: types.Message, state: FSMContext):
     await state.finish()  # очистка всех состояний
     await state.set_state(MenuStates.Main)  # переход в состояние маин
     keyboard = await start_search_button()
@@ -62,11 +56,3 @@ async def cmd_start(message: Message, state: FSMContext):
         # ОТПРАВЛЯЕМ И ПРИНИМАЕМ ТЕКСТ С ПАРАМЕТРОМ NAME И ДАТОЙ РЕГ
         text = await bot_text_baner_be(name, date_reg)
         await message.answer(text, parse_mode="HTML", reply_markup=keyboard)
-
-
-#==============ОТВЕТ НА ОБЫЧНЫЙ ТЕКСТ====================
-@start_router.message(F.text.lower() == "привет", MenuStates.Main)
-async def tests(message: Message):
-    # curr_state = await state.get_state()
-    # await message.answer(f"Вы в состоянии: {curr_state}")
-    await message.answer("Здарова")
