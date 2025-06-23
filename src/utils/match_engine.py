@@ -7,7 +7,7 @@ from aiogram.fsm.context import FSMContext
 from src.db.database import Database
 from src.keyboards.user_kb import stop_search_button
 from src.states.menu_states import MenuStates, MenuSearch
-
+from src.middlewares.command_setter import set_commands_state
 #======================================
 match_router = Router()
 
