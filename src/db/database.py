@@ -13,4 +13,4 @@ class Database:
 def add_queue(self, chat_id):
     with self.connection:
         self.cursor.execute("INSERT INTO queue (chat_id) VALUES (?)", (chat_id,))
-        print('✅ added new user')
+        print("✅ added to queue")
