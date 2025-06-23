@@ -38,7 +38,7 @@ COMMANDS_STATE = {
     ],
     "Search": [
         BotCommand(command='search', description='➡️ Следующий'),
-        BotCommand(command='stop', description='❌ Стоп')
+        BotCommand(command='stop', description='❌ Остановить поиск')
     ]
 }
 
