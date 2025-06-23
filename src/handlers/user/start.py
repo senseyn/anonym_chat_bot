@@ -20,7 +20,7 @@ start_router = Router()
 #======================КОМАНДЫ БОТА==============================
 @start_router.message(CommandStart())
 async def cmd_start(message: types.Message, state: FSMContext):
-    await state.finish()  # очистка всех состояний
+    await state.clear()  # очистка всех состояний
     await state.set_state(MenuStates.Main)  # переход в состояние маин
     keyboard = await start_search_button()
     user_id = str(message.chat.id)
