@@ -11,7 +11,7 @@ from src.states.menu_states import MenuStates
 #======================================
 match_router = Router()
 
-db = Database('db_handler.db') # база данных
+db = Database(r'src/db/db_handler.db') # база данных
 
 
 @match_router.message(F.text == "❤️ Начать поиск", MenuStates.Main)
