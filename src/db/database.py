@@ -10,6 +10,7 @@ class Database:
     #===========ДОБАВЛЕНИЕ В ОЧЕРЕДЬ=========
     def add_queue(self, chat_id):
         with self.connection:
-            result = self.cursor.execute("INSERT INTO `queue` (`chat_id`) VALUES (?)", (chat_id,))
-            print('added new user')
-        return result.fetchone()
+def add_queue(self, chat_id):
+    with self.connection:
+        self.cursor.execute("INSERT INTO queue (chat_id) VALUES (?)", (chat_id,))
+        print('✅ added new user')
