@@ -2,7 +2,7 @@
 from aiogram import Router, F  # - магический фильтр
 # from aiogram.enums import ChatAction
 from aiogram.types import Message
-
+from aiogram.fsm.context import FSMContext
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
 from src.db.database import Database
 from src.keyboards.user_kb import stop_search_button
