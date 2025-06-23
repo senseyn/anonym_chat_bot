@@ -19,6 +19,7 @@ async def hidden_comand_back_kb(message: Message, state: FSMContext):
     chat_id = message.chat.id
     if message.chat.type == "private":
         await state.set_state(MenuSearch.Search)
+        await set_commands_state(state, message.chat.id)
         button = await stop_search_button()
         db.add_queue(chat_id) # ДОБАВЛЕНИЕ В БАЗУ
         await message.answer(f"Поиск собеседника", parse_mode="HTML", reply_markup=button)
