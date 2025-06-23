@@ -27,12 +27,13 @@ from src.handlers.user.style_text_user import start_text_bot, stop_text_bot
 
 async def main():
     try:
-        #РЕГИСТРИРУЕМ РОУТЕРЫ
+        # РЕГИСТРИРУЕМ РОУТЕРЫ
         dp.include_router(start_router)
-        dp.include_router(hidden_router)
         dp.include_router(admins_router)
+        dp.include_router(hidden_router)
         dp.include_router(main_router)
         dp.include_router(match_router)
+
         #УДАЛЯЕМ ВЕБХУКИ
         await bot.delete_webhook(drop_pending_updates=True)
         # должна быть функция # УСТАНОВКА МЕНЮ КОМАНД

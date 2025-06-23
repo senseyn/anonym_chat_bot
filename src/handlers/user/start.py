@@ -1,7 +1,7 @@
 #=========БИБЛИОТЕКИ СТАНДАРТ========
 import asyncio
 
-from aiogram import Router, types # - магический фильтр
+from aiogram import Router, types  # - магический фильтр
 from aiogram.enums import ChatAction
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
@@ -24,7 +24,7 @@ async def cmd_start(message: types.Message, state: FSMContext):
     await state.set_state(MenuStates.Main)  # переход в состояние маин
     keyboard = await start_search_button()
     user_id = str(message.chat.id)
-    if user_already_exists(user_id) is False:   # проверяем наличие в базе
+    if user_already_exists(user_id) is False:  # проверяем наличие в базе
         add_user_check(message.from_user)  # проверяем или заносим в базу CSV
         date_reg = user_registration_date(str(message.from_user.id))  # получаем дату регистрации
         await set_commands_state(state, message.chat.id)  # установка команд
