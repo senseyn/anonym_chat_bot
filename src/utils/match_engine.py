@@ -101,7 +101,7 @@ async def search_stop_user(message: Message, state: FSMContext):
             # Отправляем сообщение о завершении
             await bot.send_message(chat_id=stop_user, text="Вы закончили диалог", parse_mode="HTML",
                                    reply_markup=button)
-            await bot.send_photo(chat_id=no_stop_user, text="Собеседник закончил диалог", parse_mode="HTML",
+            await bot.send_message(chat_id=no_stop_user, text="Собеседник закончил диалог", parse_mode="HTML",
                                  reply_markup=button)
             # состояние 1 юзера
             await state.set_state(MenuStates.Main)

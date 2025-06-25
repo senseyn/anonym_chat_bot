@@ -11,6 +11,6 @@ async def admin_back():
         keyboard=button_user_start,
         resize_keyboard=True,
         one_time_keyboard=True,
-        input_field_pdlaceholder="ВЫБЕРИ КНОПКУ НИЖЕ ↓"
+        input_field_pdlaceholder="ВЫБЕРИ КНОПКУ НИЖЕ"
     )
     return keyboard
