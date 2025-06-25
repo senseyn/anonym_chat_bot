@@ -7,7 +7,7 @@ from aiogram.types import Message
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
 from create_bot import bot
 from src.db.database import Database
-from src.keyboards.user_kb import stop_search_button, start_search_button
+from src.keyboards.user_kb import stop_search_button, start_search_button, null_button_search
 from src.middlewares.command_setter import set_commands_state
 from src.states.menu_states import MenuStates, MenuSearch
 
@@ -23,6 +23,7 @@ async def search_next_user(message: Message, state: FSMContext):
     # ПРОВЕРКА НАЛИЧИЯ В ПОИСКЕ ИЛИ ПЕРЕКЛЮЧЕНИЕ НА СЛЕДУЮЩЕГО
     button_menu = await start_search_button()  # главное меню кнопок
     button = await stop_search_button()
+    null_button = await null_button_search()
     stop_user = ""
     no_stop_user = ""
     chat_id = message.chat.id
@@ -44,13 +45,13 @@ async def search_next_user(message: Message, state: FSMContext):
             await message.answer("Вы не находитесь в активном чате.")
 
         try:
-            # Отправляем сообщение о завершении
-            await bot.send_message(chat_id=stop_user, text="Вы закончили диалог", parse_mode="HTML",
+            # Отправляем сообщение о завершении и начинаем поиск нового собеседника
+            await bot.send_message(chat_id=stop_user, text=f"Поиск собеседника.. \n/stop - остановить поиск", parse_mode="HTML",
                                    reply_markup=button_menu)
             await bot.send_message(chat_id=no_stop_user, text="Собеседник закончил диалог", parse_mode="HTML",
                                    reply_markup=button_menu)
             # состояние 1 юзера
-            await state.set_state(MenuStates.Main)
+            await state.set_state(MenuSearch.Search)
             await set_commands_state(state, message.chat.id)
             # состояние 2 юзера.
             user_state_info = state.storage
@@ -58,6 +59,32 @@ async def search_next_user(message: Message, state: FSMContext):
             await set_commands_state(state, no_stop_user)
 
             print(f"Завершение диалога отпрвленно пользователю {no_stop_user}.")
+            button = await stop_search_button()
+            button_false = await start_search_button()
+            chat_two = db.get_chat()  # получание айди второго собеседника который первый в очереди
+            # Начинаем поиск нового собеседника
+            if db.create_chat(chat_id, chat_two) is False:
+                try:
+                    db.add_queue(chat_id)  # ДОБАВЛЕНИЕ В БАЗУ
+                    await message.answer(f"Поиск собеседника.. \n/stop - остановить поиск", parse_mode="HTML",
+                                         reply_markup=button)
+                except Exception as e:
+                    await state.set_state(MenuStates.Main)
+                    await set_commands_state(state, message.chat.id)
+                    await message.answer(
+                        '''Произошла ошибка при добавлении вас в очередь. Пожалуйста, попробуйте еще раз.
+                        Нажмите /search - поиска собеседника
+                        ''', parse_mode="HTML", reply_markup=button_false
+                    )
+                    print(f"Ошибка добавления в очередь: {e}")
+            else:
+                text_create_chat = '''
+            Собеседник найден!\n
+            Следующий собеседник - /search
+            Остановить диалог - /stop
+            '''
+                await message.answer(text_create_chat, parse_mode="HTML", reply_markup=null_button)
+                await bot.send_message(chat_id=chat_two, text=text_create_chat, parse_mode="HTML", reply_markup=null_button)
         except Exception as e:
             print(f"Ошибка при отправке сообщения: {e}")
             await message.answer("Произошла ошибка при завершении чата")
@@ -76,6 +103,7 @@ async def search_next_user(message: Message, state: FSMContext):
 @match_router.message(F.text.in_(["❤️ Начать поиск", "/search"]), MenuStates.Main)
 async def search_new_user(message: Message, state: FSMContext):
     chat_id = message.chat.id
+    null_button = await null_button_search()
     if message.chat.type == "private":
         await state.set_state(MenuSearch.Search)
         await set_commands_state(state, message.chat.id)
@@ -103,8 +131,8 @@ async def search_new_user(message: Message, state: FSMContext):
 Следующий собеседник - /search
 Остановить диалог - /stop
 '''
-            await message.answer(text_create_chat, parse_mode="HTML")
-            await bot.send_message(chat_id=chat_two, text=text_create_chat, parse_mode="HTML")
+            await message.answer(text_create_chat, parse_mode="HTML", reply_markup=null_button)
+            await bot.send_message(chat_id=chat_two, text=text_create_chat, parse_mode="HTML", reply_markup=null_button)
     else:
         await message.answer("Эта команда доступна только в личных сообщениях.")
 
