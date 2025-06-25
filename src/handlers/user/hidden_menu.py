@@ -1,13 +1,14 @@
 #=========БИБЛИОТЕКИ СТАНДАРТ========
 import asyncio
-
+import requests
 from aiogram import Router, F  # - магический фильтр
 from aiogram.enums import ChatAction
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
-
+from aiogram.types import BufferedInputFile
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
+from create_bot import bot
 from src.handlers.user.style_text_user import hidden_commands_block, hidden_back_text
 from src.keyboards.user_kb import start_search_button, hidden_back
 from src.middlewares.command_setter import set_commands_state
@@ -91,7 +92,16 @@ async def hidde_command_cat(message: Message):
         await message.delete()
     except Exception as e:
         await delete_mess_commands(e)
-    await message.answer_photo("https://cataas.com/cat", caption="Котик (˶‾᷄ ⁻̫ ‾᷅˵)")
+    # ========ПРОВЕРКА ОТПРАВКИ======
+    try:
+        response = requests.get("https://cataas.com/cat")
+        # Создаем
+        cat_photo = BufferedInputFile( file=response.content, filename="random_cat.jpg")
+        # Отправляем фото
+        await message.answer_photo(photo=cat_photo, caption="Кот :0")
+    except Exception as e:
+        await message.answer("Ошибка отправки кота, попробуйте позже")
+        print(f"Ошибка отправки кота {e}")
 
 
 @hidden_router.message(Command('cube'), MenuStates.Hidde)
