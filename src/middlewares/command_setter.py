@@ -7,8 +7,7 @@ from create_bot import bot, logger
 #======================СОЗДАНИЕ СПИСКА КОМАНД====================0.
 COMMANDS_STATE = {
     "Main": [
-        BotCommand(command='search', description='🔍 Поиск собеседника'),
-        BotCommand(command='stop', description='❌ Закончить диалог с собеседником'),
+        BotCommand(command='search', description='❤️ Поиск собеседника'),
         BotCommand(command='start', description='🔄 Перезапуск бота'),
         BotCommand(command='interests', description='📝 Выбрать интересы'),
         BotCommand(command='help', description='❔Помощь по боту'),

@@ -1,13 +1,14 @@
 #=========БИБЛИОТЕКИ СТАНДАРТ========
 import asyncio
 
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.enums import ChatAction
 from aiogram.filters import Command
 from aiogram.types import Message
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
 from src.handlers.user.style_text_user import help_text_user
+from src.keyboards.user_kb import start_search_button
 from src.states.menu_states import MenuStates
 #======================================
 main_router = Router()
@@ -19,42 +20,8 @@ async def delete_mess_commands(error):
 
 
 #======================КОМАНДЫ БОТА==============================
-@main_router.message(Command('search'), MenuStates.Main)
-async def help_user(message: Message):
-    #========ПЕЧАТАЕТ СТАТУС=========
-    await message.bot.send_chat_action(
-        chat_id=message.chat.id,
-        action=ChatAction.TYPING
-    )
-    await asyncio.sleep(0.5)
-    #========УДАЛЕНИЕ И ПРОВЕРКА======
-    try:
-        await message.delete()
-    except Exception as e:
-        await delete_mess_commands(e)
-    # ================================
-    await message.answer("Поиск", parse_mode="HTML")
-
-
-@main_router.message(Command('stop'), MenuStates.Main)
-async def help_user(message: Message):
-    #========ПЕЧАТАЕТ СТАТУС=========
-    await message.bot.send_chat_action(
-        chat_id=message.chat.id,
-        action=ChatAction.TYPING
-    )
-    await asyncio.sleep(0.5)
-    #========УДАЛЕНИЕ И ПРОВЕРКА======
-    try:
-        await message.delete()
-    except Exception as e:
-        await delete_mess_commands(e)
-    # ================================
-    await message.answer("Стоп диалога", parse_mode="HTML")
-
-
 @main_router.message(Command('interests'), MenuStates.Main)
-async def help_user(message: Message):
+async def main_interests(message: Message):
     #========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
@@ -71,7 +38,7 @@ async def help_user(message: Message):
 
 
 @main_router.message(Command('help'), MenuStates.Main)
-async def help_user(message: Message):
+async def main_help(message: Message):
     #========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
@@ -89,8 +56,9 @@ async def help_user(message: Message):
     await message.answer(text, parse_mode="HTML")
 
 
-@main_router.message(Command('vip'), MenuStates.Main)
-async def help_user(message: Message):
+@main_router.message(F.text.in_(["💎 Купить VIP", "/vip"]), MenuStates.Main)
+async def main_vip(message: Message):
+    button = await start_search_button()
     #========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
@@ -103,11 +71,11 @@ async def help_user(message: Message):
     except Exception as e:
         await delete_mess_commands(e)
     # ================================
-    await message.answer("Купить VIP - в разработке", parse_mode="HTML")
+    await message.answer("Купить VIP - в разработке", parse_mode="HTML", reply_markup=button)
 
 
 @main_router.message(Command('paysupport'), MenuStates.Main)
-async def help_user(message: Message):
+async def main_paysupport(message: Message):
     #========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
@@ -123,8 +91,9 @@ async def help_user(message: Message):
     await message.answer("Помощь по оплате", parse_mode="HTML")
 
 
-@main_router.message(Command('settings'), MenuStates.Main)
-async def help_user(message: Message):
+@main_router.message(F.text.in_(["⚙️ Настройки профиля", "/settings"]), MenuStates.Main)
+async def main_settings(message: Message):
+    button = await start_search_button()
     #========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
@@ -137,11 +106,11 @@ async def help_user(message: Message):
     except Exception as e:
         await delete_mess_commands(e)
     # ================================
-    await message.answer("Настройки", parse_mode="HTML")
+    await message.answer("Настройки", parse_mode="HTML", reply_markup=button)
 
 
 @main_router.message(Command('rules'), MenuStates.Main)
-async def help_user(message: Message):
+async def main_rules(message: Message):
     #========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
@@ -158,7 +127,7 @@ async def help_user(message: Message):
 
 
 @main_router.message(Command('myid'), MenuStates.Main)
-async def help_user(message: Message):
+async def main_myid(message: Message):
     #========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
