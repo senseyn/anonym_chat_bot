@@ -24,10 +24,13 @@ async def search_next_user(message: Message, state: FSMContext):
     button_menu = await start_search_button()  # главное меню кнопок
     button = await stop_search_button()
     null_button = await null_button_search()
+
     stop_user = ""
     no_stop_user = ""
     chat_id = message.chat.id
-    chat_info = db.get_active_chat_delete(chat_id)  # получаем айди
+
+    chat_info = db.get_active_chat(chat_id)
+
     if db.add_queue(chat_id) is True:
         await message.answer(f"ВЫ УЖЕ В ОЧЕРЕДИ! \n/stop - остановить поиск", parse_mode="HTML")
     elif chat_info:
@@ -45,6 +48,7 @@ async def search_next_user(message: Message, state: FSMContext):
             await message.answer("Вы не находитесь в активном чате.")
 
         try:
+            db.get_active_chat_delete(chat_id)
             # Отправляем сообщение о завершении и начинаем поиск нового собеседника
             await bot.send_message(chat_id=stop_user, text=f"Поиск собеседника.. \n/stop - остановить поиск", parse_mode="HTML",
                                    reply_markup=button_menu)
@@ -59,10 +63,61 @@ async def search_next_user(message: Message, state: FSMContext):
             await set_commands_state(state, no_stop_user)
 
             print(f"Завершение диалога отпрвленно пользователю {no_stop_user}.")
+
             button = await stop_search_button()
             button_false = await start_search_button()
             chat_two = db.get_chat()  # получание айди второго собеседника который первый в очереди
             # Начинаем поиск нового собеседника
+            if chat_two != chat_id:
+                if db.create_chat(chat_id, chat_two) is False:
+                    try:
+                        db.add_queue(chat_id)  # ДОБАВЛЕНИЕ В БАЗУ
+                        await message.answer(f"Поиск собеседника.. \n/stop - остановить поиск", parse_mode="HTML",
+                                             reply_markup=button)
+                    except Exception as e:
+                        await state.set_state(MenuStates.Main)
+                        await set_commands_state(state, message.chat.id)
+                        await message.answer(
+                            '''Произошла ошибка при добавлении вас в очередь. Пожалуйста, попробуйте еще раз.
+                            Нажмите /search - поиска собеседника
+                            ''', parse_mode="HTML", reply_markup=button_false
+                        )
+                        print(f"Ошибка добавления в очередь: {e}")
+                else:
+                    text_create_chat = '''
+Собеседник найден!\n
+Следующий собеседник - /search
+Остановить диалог - /stop
+'''
+                    await message.answer(text_create_chat, parse_mode="HTML", reply_markup=null_button)
+                    await bot.send_message(chat_id=chat_two, text=text_create_chat, parse_mode="HTML", reply_markup=null_button)
+
+        except Exception as e:
+            print(f"Ошибка при отправке сообщения: {e}")
+            await message.answer("Произошла ошибка при завершении чата")
+        else:
+            # button = await button_user_search_dialog() # для другой функции
+            try:
+                db.add_queue(chat_id)  # ДОБАВЛЕНИЕ В БАЗУ
+                await message.answer(f"Поиск собеседника.. \n/stop - остановить поиск", parse_mode="HTML",
+                                     reply_markup=button)
+            except Exception as e:
+                await message.answer(
+                    "Произошла ошибка при добавлении вас в очередь. Пожалуйста, попробуйте еще раз.")
+                print(f"Ошибка добавления в очередь: {e}")
+
+
+@match_router.message(F.text.in_(["❤️ Начать поиск", "/search"]), MenuStates.Main)
+async def search_new_user(message: Message, state: FSMContext):
+    chat_id = message.chat.id
+    null_button = await null_button_search()
+    if message.chat.type == "private":
+        await state.set_state(MenuSearch.Search)
+        await set_commands_state(state, message.chat.id)
+        button = await stop_search_button()
+        button_false = await start_search_button()
+        chat_two = db.get_chat()  # получание айди второго собеседника который первый в очереди
+        if chat_two != chat_id:
             if db.create_chat(chat_id, chat_two) is False:
                 try:
                     db.add_queue(chat_id)  # ДОБАВЛЕНИЕ В БАЗУ
@@ -79,60 +134,12 @@ async def search_next_user(message: Message, state: FSMContext):
                     print(f"Ошибка добавления в очередь: {e}")
             else:
                 text_create_chat = '''
-            Собеседник найден!\n
-            Следующий собеседник - /search
-            Остановить диалог - /stop
-            '''
-                await message.answer(text_create_chat, parse_mode="HTML", reply_markup=null_button)
-                await bot.send_message(chat_id=chat_two, text=text_create_chat, parse_mode="HTML", reply_markup=null_button)
-        except Exception as e:
-            print(f"Ошибка при отправке сообщения: {e}")
-            await message.answer("Произошла ошибка при завершении чата")
-    else:
-        # button = await button_user_search_dialog() # для другой функции
-        try:
-            db.add_queue(chat_id)  # ДОБАВЛЕНИЕ В БАЗУ
-            await message.answer(f"Поиск собеседника.. \n/stop - остановить поиск", parse_mode="HTML",
-                                 reply_markup=button)
-        except Exception as e:
-            await message.answer(
-                "Произошла ошибка при добавлении вас в очередь. Пожалуйста, попробуйте еще раз.")
-            print(f"Ошибка добавления в очередь: {e}")
-
-
-@match_router.message(F.text.in_(["❤️ Начать поиск", "/search"]), MenuStates.Main)
-async def search_new_user(message: Message, state: FSMContext):
-    chat_id = message.chat.id
-    null_button = await null_button_search()
-    if message.chat.type == "private":
-        await state.set_state(MenuSearch.Search)
-        await set_commands_state(state, message.chat.id)
-        button = await stop_search_button()
-        button_false = await start_search_button()
-        chat_two = db.get_chat()  # получание айди второго собеседника который первый в очереди
-
-        if db.create_chat(chat_id, chat_two) is False:
-            try:
-                db.add_queue(chat_id)  # ДОБАВЛЕНИЕ В БАЗУ
-                await message.answer(f"Поиск собеседника.. \n/stop - остановить поиск", parse_mode="HTML",
-                                     reply_markup=button)
-            except Exception as e:
-                await state.set_state(MenuStates.Main)
-                await set_commands_state(state, message.chat.id)
-                await message.answer(
-                    '''Произошла ошибка при добавлении вас в очередь. Пожалуйста, попробуйте еще раз.
-                    Нажмите /search - поиска собеседника
-                    ''', parse_mode="HTML", reply_markup=button_false
-                )
-                print(f"Ошибка добавления в очередь: {e}")
-        else:
-            text_create_chat = '''
 Собеседник найден!\n
 Следующий собеседник - /search
 Остановить диалог - /stop
 '''
-            await message.answer(text_create_chat, parse_mode="HTML", reply_markup=null_button)
-            await bot.send_message(chat_id=chat_two, text=text_create_chat, parse_mode="HTML", reply_markup=null_button)
+                await message.answer(text_create_chat, parse_mode="HTML", reply_markup=null_button)
+                await bot.send_message(chat_id=chat_two, text=text_create_chat, parse_mode="HTML", reply_markup=null_button)
     else:
         await message.answer("Эта команда доступна только в личных сообщениях.")
 
@@ -143,6 +150,7 @@ async def search_stop_user(message: Message, state: FSMContext):
     no_stop_user = ""
     chat_id = message.chat.id
     chat_info = db.get_active_chat_delete(chat_id)  # получаем айди
+    db.delete_queue(chat_id)
     button = await start_search_button()  # главное меню кнопок
 
     if chat_info:

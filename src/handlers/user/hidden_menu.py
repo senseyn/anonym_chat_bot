@@ -1,6 +1,7 @@
 #=========БИБЛИОТЕКИ СТАНДАРТ========
 import asyncio
 import requests
+import random
 from aiogram import Router, F  # - магический фильтр
 from aiogram.enums import ChatAction
 from aiogram.filters import Command
@@ -8,7 +9,6 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from aiogram.types import BufferedInputFile
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
-from create_bot import bot
 from src.handlers.user.style_text_user import hidden_commands_block, hidden_back_text
 from src.keyboards.user_kb import start_search_button, hidden_back
 from src.middlewares.command_setter import set_commands_state
@@ -65,6 +65,7 @@ async def hidde_command_about(message: Message):
 
 @hidden_router.message(Command('roll'), MenuStates.Hidde)
 async def hidde_command_roll(message: Message):
+    text = random.random()
     # ========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
@@ -76,7 +77,8 @@ async def hidde_command_roll(message: Message):
         await message.delete()
     except Exception as e:
         await delete_mess_commands(e)
-    await message.answer('случайное число')
+    # =================================
+    await message.answer(f'<b>Cлучайное число:</b> <pre>{text}</pre>', parse_mode = "HTML")
 
 
 @hidden_router.message(Command('cat'), MenuStates.Hidde)
@@ -96,7 +98,7 @@ async def hidde_command_cat(message: Message):
     try:
         response = requests.get("https://cataas.com/cat")
         # Создаем
-        cat_photo = BufferedInputFile( file=response.content, filename="random_cat.jpg")
+        cat_photo = BufferedInputFile(file=response.content, filename="random_cat.jpg")
         # Отправляем фото
         await message.answer_photo(photo=cat_photo, caption="Кот :0")
     except Exception as e:

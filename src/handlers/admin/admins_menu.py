@@ -20,11 +20,9 @@ from src.states.menu_states import AdminStates, MenuStates
 admins_router = Router()
 admins_router.message.filter(IsAdmin())
 
-
 #==========ФУНКЦИИ=====================
 async def delete_mess_commands(error):
     print(f"\033[1;41mОшибка удаления\033[0m: {error}")
-
 
 #======================КОМАНДЫ БОТА==============================
 @admins_router.message(Command('dashboard'))
@@ -66,7 +64,7 @@ async def admin_comand_user_id(message: Message):
 
 
 @admins_router.message(Command('mailing'), AdminStates.Dashboard)
-async def admin_comand_mailing(message: Message):
+async def admin_menu_main(message: Message):
     # ========ПЕЧАТАЕТ СТАТУС=========
     await message.bot.send_chat_action(
         chat_id=message.chat.id,
@@ -78,7 +76,7 @@ async def admin_comand_mailing(message: Message):
         await message.delete()
     except Exception as e:
         await delete_mess_commands(e)
-    await message.answer('Рассылка сообщений, отправь мне сообщение!')
+    await message.answer('Рассылка сообщений,\nпришли мне сообщение и я разошлю его всем')
 
 
 @admins_router.message(Command('stats_view'), AdminStates.Dashboard)

@@ -1,4 +1,4 @@
-from aiogram.fsm.context  import FSMContext
+from aiogram.fsm.context import FSMContext
 from aiogram.types import BotCommand, BotCommandScopeChat
 
 # ==========ИМПОРТ МОИХ ФАЙЛОВ=========
